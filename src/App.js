@@ -9,6 +9,17 @@ class App extends React.Component {
       complete: false,
     };
   }
+
+  taskChecked = () => {
+    this.setState(
+      {
+        complete: !this.state.complete,
+      },
+      () => {
+        console.log(this.state.complete);
+      },
+    );
+  };
   render() {
     const { complete, title, id } = this.state;
 
@@ -21,11 +32,9 @@ class App extends React.Component {
           id="task"
           name="taskCompleted"
           value="taskCompleted"
-          onChange={() => {
-            this.setState({ complete: !complete });
-          }}
+          onChange={this.taskChecked}
         />
-        <label for="task">{title}</label>
+        <label htmlFor="task">{title}</label>
       </div>
     );
   }
