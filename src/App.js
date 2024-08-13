@@ -1,40 +1,36 @@
 import React from "react";
-
+import todolistdata from "./todolistdata";
+import TodoList from "./TodoList";
 class App extends React.Component {
   constructor() {
     super();
-    this.state = {
-      id: 1,
-      title: "My task",
-      complete: false,
-    };
+    this.state = { data: todolistdata };
   }
 
-  taskChecked = () => {
-    this.setState(
-      {
-        complete: !this.state.complete,
-      },
-      () => {
-        console.log(this.state.complete);
-      },
-    );
+  taskChecked = (task) => {
+    const { data } = this.state;
+    const taskIndex = data.indexOf(task);
+    data[taskIndex].complete = !data[taskIndex].complete;
+    this.setState({
+      data: [...data],
+    });
   };
-  render() {
-    const { complete, title, id } = this.state;
 
+  render() {
+    const { data } = this.state;
+    console.log(data);
     return (
       <div className="App">
         <h1>My Daily Task </h1>
-        {/* {console.log(this)} */}
-        <input
-          type="checkbox"
-          id="task"
-          name="taskCompleted"
-          value="taskCompleted"
-          onChange={this.taskChecked}
-        />
-        <label htmlFor="task">{title}</label>
+        {data.map((task, index) => {
+          return (
+            <TodoList
+              ontaskChecked={this.taskChecked}
+              todoitem={task}
+              key={index}
+            />
+          );
+        })}
       </div>
     );
   }
